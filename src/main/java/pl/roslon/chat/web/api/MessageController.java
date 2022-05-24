@@ -1,19 +1,21 @@
 package pl.roslon.chat.web.api;
 
+import pl.roslon.chat.repository.entity.MessageEntity;
 import pl.roslon.chat.service.MessageService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import java.util.logging.Logger;
 
 @ApplicationScoped
 @Path("/chats/messages")
-public class MessageResource {
-    private static final Logger LOGGER = Logger.getLogger(MessageResource.class.getName());
+public class MessageController {
+    private static final Logger LOGGER = Logger.getLogger(MessageController.class.getName());
 
     @Inject
     MessageService messageService;
@@ -25,4 +27,13 @@ public class MessageResource {
         messageService.create(message);
         return "Hello, World!";
     }
+
+    @GET
+    @Path("{id}")
+    public MessageEntity getById(@PathParam("id") String id){
+        return messageService.getById(id);
+    }
+
+
+
 }

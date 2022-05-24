@@ -36,5 +36,9 @@ public class MessageService {
         }
     }
 
+    public MessageEntity getById(String id){
+        return entityManager.find(MessageEntity.class, id);
+    }
+
 
 }
