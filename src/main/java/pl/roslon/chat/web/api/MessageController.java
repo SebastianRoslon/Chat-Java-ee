@@ -1,6 +1,5 @@
 package pl.roslon.chat.web.api;
 
-import pl.roslon.chat.repository.entity.MessageEntity;
 import pl.roslon.chat.service.MessageService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,7 +21,7 @@ public class MessageController {
 
     @GET
     @Produces("text/plain")
-    public String create(@QueryParam("message") String message) {
+    public String createMessage(@QueryParam("message") String message) {
         LOGGER.info("create(" + message + ")");
         messageService.create(message);
         return "Hello, World!";
@@ -30,10 +29,19 @@ public class MessageController {
 
     @GET
     @Path("{id}")
-    public MessageEntity getById(@PathParam("id") String id){
-        return messageService.getById(id);
+    public String getById(@PathParam("id") String id) {
+        return String.valueOf(messageService.getById(id));
     }
 
+    @GET
+    @Produces("text/plain")
+    @Path("{roomName}")
+    public String createPrivMessage(@PathParam("roomName") String roomName,
+                                    @QueryParam("message") String message) {
+        LOGGER.info("create(" + message + ")");
+        messageService.create(message);
+        return message;
+    }
 
 
 }
