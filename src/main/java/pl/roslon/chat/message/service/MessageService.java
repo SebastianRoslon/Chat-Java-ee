@@ -1,5 +1,5 @@
-package pl.roslon.chat.service;
-import pl.roslon.chat.repository.entity.MessageEntity;
+package pl.roslon.chat.message.service;
+import pl.roslon.chat.message.repository.entity.MessageEntity;
 
 import javax.annotation.Resource;
 import javax.inject.Named;
