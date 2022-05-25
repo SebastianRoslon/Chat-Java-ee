@@ -1,6 +1,6 @@
-package pl.roslon.chat.message.web.api;
+package pl.roslon.chat.web.api;
 
-import pl.roslon.chat.message.service.MessageService;
+import pl.roslon.chat.service.MessageService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
