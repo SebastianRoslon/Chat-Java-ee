@@ -1,44 +1,24 @@
 package pl.roslon.chat.service;
-import pl.roslon.chat.repository.entity.MessageEntity;
 
-import javax.annotation.Resource;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import pl.roslon.chat.entity.MessageEntity;
+import pl.roslon.chat.persistance.repository.MessageRepository;
 
-@Named
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import java.util.List;
+
+@ApplicationScoped
 public class MessageService {
-    private static final Logger LOGGER = Logger.getLogger(MessageService.class.getName());
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Inject
+    private MessageRepository messageRepository;
 
-    @Resource
-    private UserTransaction userTransaction;
-
-    public void create(String message) {
-        LOGGER.info("create(" + message + ")");
-        LOGGER.info("entityManager: " + entityManager.getProperties());
-
-        MessageEntity messageEntity = new MessageEntity();
-        messageEntity.setMessage(message);
-
-        try {
-            userTransaction.begin();
-            entityManager.persist(messageEntity);
-            userTransaction.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Unable to persist Entity", e);
-//            userTransaction.rollback();
-        }
+    public void saveMessage(MessageEntity messageEntity) {
+        messageRepository.saveMessage(messageEntity);
     }
 
-    public MessageEntity getById(String id){
-        return entityManager.find(MessageEntity.class, id);
+    public List<MessageEntity> getMessagesByRoomName(String roomName) {
+        return messageRepository.findMessagesByRoomName(roomName);
     }
-
 
 }
