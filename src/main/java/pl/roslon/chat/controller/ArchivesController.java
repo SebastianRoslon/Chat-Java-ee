@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/archives")
 public class ArchivesController {
@@ -25,7 +26,7 @@ public class ArchivesController {
     public Response getRoomHistory(@PathParam("roomName") String roomName) {
         List<ClientMessageDto> clientMessages = clientMessageService.getMessagesByRoomName(roomName).stream()
                 .map(MessageEntity::toDto)
-                .toList();
+                .collect(Collectors.toList());
         return Response.ok(clientMessages).build();
     }
 
